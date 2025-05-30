@@ -1,0 +1,5 @@
+record(longout, "myApp:val") {
+    field(DTYP, "asynInt32")
+    field(OUT, "@asyn(TEST_PORT 0)MY_PARAM")
+    field(VAL, "0")
+}
