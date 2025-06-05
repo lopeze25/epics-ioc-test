@@ -1,0 +1,4 @@
+EPICS is a set of software tools and applications used to develop and implement distributed control systems.
+
+EPICs funcitnality works on IOC support communicating between CW stations across a LAN. The primarily focus of EPICS revolves around its databases where there are scanners and other record supports to help process the database and then device support. Device drivers are specific to a device and provide the necessary I/O funcitonality alongside the device uspport layer.
+Finally the databses communicates with external members via the channel access inlcuding other IOCs. Via the channel acess it may also communicate wiht a local monitor. 
