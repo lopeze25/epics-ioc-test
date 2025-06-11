@@ -6,10 +6,12 @@
 
 // Scienta DLL function 
 extern "C" uint32_t GDS_ZeroSupplies(void);  
+extern "C" int32_t GDS_GetCurrKineticEnergy(double* value);
 
-// ===== PARAMETER STRINGS (used in drvInfo) ===== //
-#define ZeroSuppliesString "SCIENTA_ZERO_SUPPLIES"  // used in db INP/OUT link
-
+// ===== PARAMETER STRINGS (used in drvInfo) ===== 
+// used in db INP/OUT link
+#define ZeroSuppliesString "SCIENTA_ZERO_SUPPLIES" 
+#define GetCurrentKineticString "SCIENTA_KINETIC_ENERGY_RBV" 
 
 // asynPortDriver (asynParamSet *paramSet, const char *portName, int maxAddr, int interfaceMask, int interruptMask, int asynFlags, int autoConnect, int priority, int stackSize) 
 testAsynDriver::testAsynDriver(const char* portName)
@@ -20,7 +22,7 @@ testAsynDriver::testAsynDriver(const char* portName)
         1,                  
         0, 0)     
 {
-    createParam
+    createParam(GetCurrentKineticString, readFloat65, &kineticEnergy); 
     createParam(ZeroSuppliesString, asynParamInt32, &ZeroSupplies);
 }
 
