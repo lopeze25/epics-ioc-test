@@ -4,23 +4,24 @@
 #include <epicsExport.h>
 #include <stdio.h>
 
-
-extern "C" uint32_t GDS_ZeroSupplies(void);  // Scienta DLL function
+// Scienta DLL function 
+extern "C" uint32_t GDS_ZeroSupplies(void);  
 
 // ===== PARAMETER STRINGS (used in drvInfo) ===== //
-#define P_ZeroSuppliesString "SCIENTA_ZERO_SUPPLIES"  // used in db INP/OUT link
+#define ZeroSuppliesString "SCIENTA_ZERO_SUPPLIES"  // used in db INP/OUT link
 
-// ===== Constructor ===== //
-ScientaAsynDriver::ScientaAsynDriver(const char* portName)
-    : asynPortDriver(portName 1,  // maxAddr
-        asynInt32Mask,       // Interface mask
-        asynInt32Mask,       // Interrupt mask
-        0,                   // asynFlags (non-blocking, single device)
-        1,                   // autoConnect
-        0, 0)                // priority, stack size
+
+// asynPortDriver (asynParamSet *paramSet, const char *portName, int maxAddr, int interfaceMask, int interruptMask, int asynFlags, int autoConnect, int priority, int stackSize) 
+testAsynDriver::testAsynDriver(const char* portName)
+    : asynPortDriver(portName 1,  
+        asynInt32Mask,      
+        asynInt32Mask,       
+        0,                
+        1,                  
+        0, 0)     
 {
-    // ===== Create Parameters ===== //
-    createParam(P_ZeroSuppliesString, asynParamInt32, &P_ZeroSupplies);
+    createParam
+    createParam(ZeroSuppliesString, asynParamInt32, &ZeroSupplies);
 }
 
 
@@ -31,23 +32,13 @@ asynStatus testAsynDriver::writeInt32(asynUser* pasynUser, epicsInt32 value)
     const char* paramName;
     const char* functionName = "writeInt32";
 
-
-    if (function == P_ZeroSupplies && value == 1) {
-        uint32_t err = GDS_ZeroSupplies();
-        if (err > 0) {
-            printf("%s::%s: GDS_ZeroSupplies failed with code %u\n", driverName, functionName, err);
-            status = asynError;
-        }
-        else {
-            printf("%s::%s: Successfully zeroed Scienta voltages.\n", driverName, functionName);
-        }
-    }
-
-    // Notify any connected clients (e.g., EPICS records)
-    callParamCallbacks();
-
+    if (function == ZeroSupplies && value == 1) {
+          GDS_ZeroSupplies();
+        return status
+  
 }
-// ===== EPICS Registration ===== //
+
+// For the startup st.cmd
 extern "C" {
     int ScientaAsynDriverConfigure(const char* portName) {
         new testAsynDriver(portName);
