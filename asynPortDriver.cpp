@@ -8,7 +8,6 @@
 extern "C" uint32_t GDS_ZeroSupplies(void);  
 extern "C" int32_t GDS_GetCurrKineticEnergy(double* value);
 
-// ===== PARAMETER STRINGS (used in drvInfo) ===== 
 // used in db INP/OUT link
 #define ZeroSuppliesString "SCIENTA_ZERO_SUPPLIES" 
 #define GetCurrentKineticString "SCIENTA_KINETIC_ENERGY_RBV" 
