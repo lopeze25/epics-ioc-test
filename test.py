@@ -6,21 +6,20 @@ from os.path import join
 from datetime import date
 
 
-
-
 """
-writer, reader, and parser based on what we discussed and at least how i understood it
-some things can be tweaked for readability/ user experience /ease of use, such as error checks
+Writer, reader, and parser based on what we discussed and at least how I understood it. 
+Some elements can be adjusted for readability, user experience, or ease of use—such as error handling and variable names.
 
-writer takes any entry and reads it to any given file path 
+The writer takes any entry and appends it to the specified file path.
+The reader reads entries from a file. A major change is that it now uses tuples,
+which improves indexing and searching by comment or header compared to my original idea of dictionaries which has unique keys
+It can also handle flux curves if the format for Flux_Curves.txt is changed, and it can convert dictionaries of lists into proper dictionaries.
 
-reader takes a filepath and can read any entry from it 
-
-parser find the coefficient for a given
-
+The parser finds the coefficient corresponding to a given entry.
+Uses dictionaries
 """
 
-# testCal class to test
+# testCal class to test similar to before 
 class testCal:
 
     def __init__(self):
@@ -117,6 +116,7 @@ class testCal:
 
                         # Safely evaluate the dictionary
                         entry_dict = ast.literal_eval(clean_block)
+                        #create a tuple and add it to entries
                         entries.append((header, entry_dict))
                     except Exception as e:
                         if debug:
@@ -135,18 +135,17 @@ class testCal:
         if index is not None:
             header, entry = entries[index]
 
-         #Convert list-of-pairs to dict if needed, may be removed later 
+        #Convert list-of-pairs to dict if needed
         for grating in entry:
             for mode in entry[grating]:
                 if isinstance(entry[grating][mode], list):
                     entry[grating][mode] = { bkpt: coefs for bkpt, coefs in entry[grating][mode]}
 
         if debug:
-            print("\nSelected Entry Header", header)
-            print("\nParsed Dictionary:", entry )
-
-
-        return header, block
+            print("\ Selectede Entry Header", header)
+            print("\n Dictionary:", entry )
+        
+        return header, entry
 
 
 def parse_cal(entry, grating, ID_mode, energy_eV):
@@ -191,10 +190,9 @@ test_entry = {
 # First test write
 cal.write(test_entry, comment="Test Calibration Entry", debug=True)
 
-
 # Read an entry at a specific index, will convert list-of-pairs to dictionaries 
-read_entry = cal.read(index=7)
-
+#Can be changed but the idea was to be able to get the comment for the entry, or can we just return back the entry 
+header, read_entry = cal.read(index=7)
 
 print(read_entry)
 
