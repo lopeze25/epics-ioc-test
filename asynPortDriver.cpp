@@ -36,7 +36,7 @@ asynStatus testAsynDriver::writeInt32(asynUser* pasynUser, epicsInt32 value)
 //    const char* paramName;
  //   const char* functionName = "writeInt32";
 (( caget ZeroSupplies : 1))
-    if (function == ZeroSupplies && value == 1) {
+    if (function == ZeroSupplies) {
           GDS_ZeroSupplies(); 
     else {
             status = asynError; 
