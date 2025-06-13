@@ -50,6 +50,7 @@ class testCal:
         comment = kwargs.get("comment", "")
     
         # fpath = join(path, filename)
+        # fpath for cheerful 
         fpath=r"C:\Users\29iduser\Documents\GitHub\Dict_IDCal.txt"
         # Make the directory if it doesnt exist
         os.makedirs(path, exist_ok=True)
@@ -172,8 +173,9 @@ def parse_cal(entry, grating, ID_mode, energy_eV):
     for bp in sorted_breakpoints:
         if energy_eV < bp:
             return breakpointdict[bp]
-
-    return breakpointdict[sorted_breakpoints[-1]]
+        else
+        #just returns the highest breakpoint if the eV is above all breakpoints 
+            return breakpointdict[sorted_breakpoints[-1]]
 
 
 
